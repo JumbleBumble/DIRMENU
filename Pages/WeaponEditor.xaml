@@ -1,0 +1,72 @@
+﻿<Page x:Class="DIRMENU.Pages.WeaponEditor"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DIRMENU.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="WeaponEditor">
+    
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/RoundedButton.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid Background="#315682">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="90*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" CornerRadius="3" Padding="4">
+            <Button Style="{StaticResource RoundedButton}" HorizontalAlignment="Right" Margin="0,0,10,0" Click="NavigateHome">Back</Button>
+        </Border>
+        <Border Grid.Row="0" CornerRadius="3" Padding="4">
+            <ComboBox Name="CategoryList" SelectedIndex="0" Width="200" SelectionChanged="loadCategory">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </Border>
+        <Border Grid.Row="1" CornerRadius="2" Background="#206BC4">
+            <ListBox Name="WeaponList" d:ItemsSource="{d:SampleData ItemCount=50}" Background="Transparent" BorderBrush="Transparent" Foreground="White" VerticalContentAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Disabled" Padding="2" FontFamily="Open Sans Extrabold">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation='Horizontal'/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Button Style="{StaticResource RoundedButton}" Content="{Binding}" Click="loadItem"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
+        <Border Grid.Row="2" CornerRadius="10" Background="#0954AE" Margin="5">
+            <ListBox Name="WeaponParams" d:ItemsSource="{d:SampleData ItemCount=50}" Background="Transparent" BorderBrush="Transparent" Foreground="White" HorizontalContentAlignment="Center" Padding="5" FontFamily="Open Sans Extrabold">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Label}" Margin="0 0 5 0" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding Value}" Grid.Column="1" Style="{StaticResource {x:Type TextBox}}" VerticalAlignment="Center"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
+        <Button Grid.Row="3" Click="submitItems">Submit</Button>
+    </Grid>
+</Page>

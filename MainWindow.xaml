@@ -6,60 +6,7 @@
         xmlns:local="clr-namespace:DIRMENU"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid Background="#315682">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Border Grid.Row="0" CornerRadius="3" Background="#6486ad" Margin="5">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width="10*"/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Click="LoadFile_Click" Uid="loadWalker">Walker</Button>
-                <Button Grid.Column="1" Click="LoadFile_Click" Uid="loadInfected">Infected</Button>
-                <Button Grid.Column="2" Click="LoadFile_Click" Uid="loadHuman">Human</Button>
-                <Button Grid.Column="3" Click="LoadFile_Click" Uid="loadThug">Thug?</Button>
-                <Button Grid.Column="4" Click="LoadFile_Click" Uid="loadSuicider">Suicider</Button>
-                <Button Grid.Column="5" Click="LoadFile_Click" Uid="loadFloater">Floater?</Button>
-                <Button Grid.Column="6" Click="LoadFile_Click" Uid="loadDrowned">Drowned</Button>
-                <Button Grid.Column="7" Click="LoadFile_Click" Uid="loadButcher">Butcher?</Button>
-                <Button Grid.Column="8" Click="LoadFile_Click" Uid="loadScreamer">Screamer</Button>
-                <Button Grid.Column="9" Click="LoadFile_Click" Uid="loadWrestler">Wrestler</Button>
-                <Button Grid.Column="10" Click="LoadFile_Click" Uid="loadGrenadier">Grenadier</Button>
-                <Button Grid.Column="11" Click="LoadFile_Click" Uid="loadScreamerALt">Screamer?</Button>
-                <Button Grid.Column="12" Click="LoadFile_Click" Uid="loadRam">Ram</Button>
-            </Grid>
-        </Border>
-        <Border Grid.Row="1" CornerRadius="10" Background="#222E3B" Margin="5">
-            <ListBox Name="ParamList" Background="Transparent" BorderBrush="Transparent" Foreground="White" HorizontalContentAlignment="Center" Padding="5" FontFamily="Open Sans Extrabold">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="60"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Label}" Margin="0 0 5 0" VerticalAlignment="Center"/>
-                            <TextBox Text="{Binding Value}" Grid.Column="1" Style="{StaticResource {x:Type TextBox}}" VerticalAlignment="Center"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </Border>
-        <Button Content="Submit" Click="Submit_Click"  Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 10"/>
+    <Grid>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
