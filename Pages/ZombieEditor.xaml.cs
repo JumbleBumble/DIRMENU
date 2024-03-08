@@ -1,21 +1,12 @@
 ﻿using DIRMENU.Models;
 using System;
 using System.Collections.Generic;
-using System.IO.Compression;
 using System.IO;
-using System.Linq;
+using System.IO.Compression;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Path = System.IO.Path;
 
 namespace DIRMENU.Pages
@@ -121,7 +112,6 @@ namespace DIRMENU.Pages
 
         }
 
-        private const string dataPakPath = @"C:\SteamLibrary\steamapps\common\DIRDE\DIR\Data0.pak";
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
             string? executablePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -129,9 +119,14 @@ namespace DIRMENU.Pages
             {
                 return;
             }
-            if (!File.Exists(dataPakPath))
+            if (((App)Application.Current).dataPakPath == "Select Data0.pak")
             {
-                MessageBox.Show("ERROR: Data0.pak does not exist, please verify files or reinstall.");
+                MessageBox.Show("ERROR: Please select the location of your Data0.pak (Should be in your games directory in the DIR folder)");
+                return;
+            }
+            if (!File.Exists(((App)Application.Current).dataPakPath))
+            {
+                MessageBox.Show("ERROR: Data0.pak does not exist or wasn't selected properly, please verify files or reinstall.");
                 return;
             }
             string tempDir = Path.Combine(executablePath, "TempUnzip");
@@ -141,7 +136,7 @@ namespace DIRMENU.Pages
             }
             try
             {
-                ZipFile.ExtractToDirectory(dataPakPath, tempDir);
+                ZipFile.ExtractToDirectory(((App)Application.Current).dataPakPath, tempDir);
 
                 string vesselDataPath = Path.Combine(tempDir, "data", "ai", currentType, currentFile + ".scr");
 
@@ -180,7 +175,7 @@ namespace DIRMENU.Pages
                 string newPakPath = Path.Combine(executablePath, "Data0.pak");
                 ZipFile.CreateFromDirectory(tempDir, newPakPath);
 
-                File.Copy(newPakPath, dataPakPath, true);
+                File.Copy(newPakPath, ((App)Application.Current).dataPakPath, true);
             }
             catch
             {

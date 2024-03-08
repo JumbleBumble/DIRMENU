@@ -8,7 +8,6 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using DIRMENU.Pages;
 
 namespace DIRMENU.Utils
 {
@@ -143,7 +142,6 @@ namespace DIRMENU.Utils
                                 if (currentButton != null)
                                 {
                                     currentButton.Background = Brushes.White;
-                                    //currentButton.Foreground = Brushes.Black;
                                     currentButton.BorderBrush = Brushes.White;
                                     currentButton.BorderThickness = new Thickness(0);
                                     currentButton.MouseEnter += (sender, e) =>
@@ -175,7 +173,6 @@ namespace DIRMENU.Utils
                                         btn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E0E0E0"));
                                     }
                                 };
-                                //currentButton.Foreground = Brushes.White;
                                 foreach (var propertyEntry in itemEntry.Value)
                                 {
                                     List.Items.Add(new ParameterWepEntry(propertyEntry.Key, propertyEntry.Value, currentCategory, currentItem, Inventory));

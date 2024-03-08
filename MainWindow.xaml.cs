@@ -1,13 +1,5 @@
-﻿using DIRMENU.Models;
-using DIRMENU.Pages;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
-using System.Reflection;
+﻿using DIRMENU.Pages;
 using System.Windows;
-using System.Windows.Controls;
-using Path = System.IO.Path;
 
 namespace DIRMENU
 {
