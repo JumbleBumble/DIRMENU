@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DIRMENU.Pages
 {
@@ -32,12 +21,28 @@ namespace DIRMENU.Pages
 
         private void NavWepEditor(object sender, RoutedEventArgs e)
         {
-            NavigationService?.Navigate(new WeaponEditor());
+            NavigationService?.Navigate(new ItemEditor());
         }
 
         private void NavItemGenEditor(object sender, RoutedEventArgs e)
         {
             NavigationService?.Navigate(new ItemGenEditor());
+        }
+
+        private void SelectDataPath(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button)
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "PAK files (*.pak)|*.pak|All files (*.*)|*.*";
+                openFileDialog.InitialDirectory = @"C:\";
+
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    ((App)Application.Current).dataPakPath = openFileDialog.FileName;
+                    button.Content = openFileDialog.FileName;
+                }
+            }
         }
     }
 }

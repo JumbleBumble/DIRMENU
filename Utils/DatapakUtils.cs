@@ -1,31 +1,35 @@
-﻿using System;
+﻿using DIRMENU.Models;
+using System;
 using System.Collections.Generic;
-using System.IO.Compression;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using DIRMENU.Models;
 using System.Windows.Media;
-using System.Diagnostics;
+using DIRMENU.Pages;
 
 namespace DIRMENU.Utils
 {
     public class DatapakUtils
     {
-        public static void Repack(string fileName, string dataPakPath, Dictionary<string, Dictionary<string, Dictionary<string, string>>> Inventory, Boolean NolastItem = false)
+
+        public static void Repack(string fileName, Dictionary<string, Dictionary<string, Dictionary<string, string>>> Inventory, Boolean NolastItem = false)
         {
             string? executablePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             if (executablePath == string.Empty || executablePath == null)
             {
                 return;
             }
-            if (!File.Exists(dataPakPath))
+            if (((App)Application.Current).dataPakPath == "Select Data0.pak")
             {
-                MessageBox.Show("ERROR: Data0.pak does not exist, please verify files or reinstall.");
+                MessageBox.Show("ERROR: Please select the location of your Data0.pak (Should be in your games directory in the DIR folder)");
+                return;
+            }
+            if (!File.Exists(((App)Application.Current).dataPakPath))
+            {
+                MessageBox.Show("ERROR: Data0.pak does not exist or wasn't selected properly, please verify files or reinstall.");
                 return;
             }
             string tempDir = Path.Combine(executablePath, "TempUnzip");
@@ -35,7 +39,7 @@ namespace DIRMENU.Utils
             }
             try
             {
-                ZipFile.ExtractToDirectory(dataPakPath, tempDir);
+                ZipFile.ExtractToDirectory(((App)Application.Current).dataPakPath, tempDir);
 
                 string invDataPath = Path.Combine(tempDir, "data", fileName);
                 string? currentLoopItem = null;
@@ -91,7 +95,7 @@ namespace DIRMENU.Utils
                 string newPakPath = Path.Combine(executablePath, "Data0.pak");
                 ZipFile.CreateFromDirectory(tempDir, newPakPath);
 
-                File.Copy(newPakPath, dataPakPath, true);
+                File.Copy(newPakPath, ((App)Application.Current).dataPakPath, true);
             }
             catch
             {
@@ -139,11 +143,39 @@ namespace DIRMENU.Utils
                                 if (currentButton != null)
                                 {
                                     currentButton.Background = Brushes.White;
-                                    currentButton.Foreground = Brushes.Black;
+                                    //currentButton.Foreground = Brushes.Black;
+                                    currentButton.BorderBrush = Brushes.White;
+                                    currentButton.BorderThickness = new Thickness(0);
+                                    currentButton.MouseEnter += (sender, e) =>
+                                    {
+                                        var btn = sender as Button;
+                                        if (btn != null)
+                                        {
+                                            btn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E0E0E0"));
+                                        }
+                                    };
+                                    currentButton.MouseLeave += (sender, e) =>
+                                    {
+                                        var btn = sender as Button;
+                                        if (btn != null)
+                                        {
+                                            btn.Background = Brushes.White;
+                                        }
+                                    };
                                 }
                                 currentButton = button;
-                                currentButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#6a6a6a"));
-                                currentButton.Foreground = Brushes.White;
+                                currentButton.BorderBrush = Brushes.Black;
+                                currentButton.BorderThickness = new Thickness(2);
+                                currentButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E0E0E0"));
+                                currentButton.MouseLeave += (sender, e) =>
+                                {
+                                    var btn = sender as Button;
+                                    if (btn != null)
+                                    {
+                                        btn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E0E0E0"));
+                                    }
+                                };
+                                //currentButton.Foreground = Brushes.White;
                                 foreach (var propertyEntry in itemEntry.Value)
                                 {
                                     List.Items.Add(new ParameterWepEntry(propertyEntry.Key, propertyEntry.Value, currentCategory, currentItem, Inventory));
@@ -209,7 +241,7 @@ namespace DIRMENU.Utils
                         Inventory[category] = new Dictionary<string, Dictionary<string, string>>();
                     }
                 }
-                else if (line.Contains("(") && line.Trim().Length > 3)
+                else if (line.Contains("(") && line.Trim() != "sub main()")
                 {
                     string propertyName = line.Split("(")[0].Trim();
                     string propertyValue = new string(line.Split("(")[1].Where(c => !");".Contains(c)).ToArray());
@@ -229,16 +261,21 @@ namespace DIRMENU.Utils
             }
         }
 
-        public static void LoadCurrent(string fileName, string dataPakPath, Dictionary<string, Dictionary<string, Dictionary<string, string>>> Inventory, ListBox DisplayList, ComboBox CategoryList, string startingCategory = "CraftPart")
+        public static void LoadCurrent(string fileName, Dictionary<string, Dictionary<string, Dictionary<string, string>>> Inventory, ListBox DisplayList, ComboBox CategoryList, string startingCategory = "CraftPart")
         {
             string? executablePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             if (executablePath == string.Empty || executablePath == null)
             {
                 return;
             }
-            if (!File.Exists(dataPakPath))
+            if (((App)Application.Current).dataPakPath == "Select Data0.pak")
             {
-                MessageBox.Show("ERROR: Data0.pak does not exist, please verify files or reinstall.");
+                MessageBox.Show("ERROR: Please select the location of your Data0.pak (Should be in your games directory in the DIR folder");
+                return;
+            }
+            if (!File.Exists(((App)Application.Current).dataPakPath))
+            {
+                MessageBox.Show("ERROR: Data0.pak does not exist or wasn't selected properly, please verify files or reinstall.");
                 return;
             }
             string tempDir = Path.Combine(executablePath, "TempUnzip");
@@ -250,7 +287,7 @@ namespace DIRMENU.Utils
             {
                 Inventory.Clear();
                 DisplayList.Items.Clear();
-                ZipFile.ExtractToDirectory(dataPakPath, tempDir);
+                ZipFile.ExtractToDirectory(((App)Application.Current).dataPakPath, tempDir);
                 string invDataPath = Path.Combine(tempDir, "data", fileName);
                 AddInventory(invDataPath, Inventory, DisplayList, CategoryList, startingCategory);
             }

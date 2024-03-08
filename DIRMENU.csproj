@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Styles\file.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Styles\file.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Pages\ItemGenEditor.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

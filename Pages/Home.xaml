@@ -11,6 +11,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/RoundedButton.xaml"/>
+                <ResourceDictionary Source="/Styles/FileSelector.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
@@ -25,6 +26,9 @@
         </Border>
         <Border Grid.Row="1" Background="#0954AE">
             <StackPanel>
+                <Border Padding="4">
+                    <Button Style="{StaticResource FileSelectButtonStyle}" Click="SelectDataPath" HorizontalAlignment="Center" Content="{Binding dataPakPath, Source={x:Static Application.Current}}" VerticalAlignment="Center"></Button>
+                </Border>
                 <Border Padding="4">
                     <Button Style="{StaticResource RoundedButton}" MaxWidth="120" Click="NavZEditor">Zombie Editor</Button>
                 </Border>

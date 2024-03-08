@@ -13,5 +13,6 @@ namespace DIRMENU
     /// </summary>
     public partial class App : Application
     {
+        public string dataPakPath { get; set; } = "Select Data0.pak";
     }
 }
