@@ -85,7 +85,7 @@
             </ListBox>
         </Border>
         <Border Grid.Row="3" Padding="2">
-            <Button Style="{StaticResource RoundedButton}" Click="SubmitItems">Submit</Button>
+            <Button Style="{StaticResource RoundedButton}" Click="SubmitItem">Submit</Button>
         </Border>
     </Grid>
 </Page>
