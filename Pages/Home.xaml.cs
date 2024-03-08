@@ -34,5 +34,10 @@ namespace DIRMENU.Pages
         {
             NavigationService?.Navigate(new WeaponEditor());
         }
+
+        private void NavItemGenEditor(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new ItemGenEditor());
+        }
     }
 }

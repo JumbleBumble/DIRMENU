@@ -29,7 +29,10 @@
                     <Button Style="{StaticResource RoundedButton}" MaxWidth="120" Click="NavZEditor">Zombie Editor</Button>
                 </Border>
                 <Border Padding="4">
-                    <Button Style="{StaticResource RoundedButton}" MaxWidth="120" Click="NavWepEditor" >Weapon Editor</Button>
+                    <Button Style="{StaticResource RoundedButton}" MaxWidth="120" Click="NavWepEditor" >Item Editor</Button>
+                </Border>
+                <Border Padding="4">
+                    <Button Style="{StaticResource RoundedButton}" MaxWidth="120" Click="NavItemGenEditor" >Item Gen Editor</Button>
                 </Border>
             </StackPanel>
         </Border>

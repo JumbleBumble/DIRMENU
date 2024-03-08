@@ -24,17 +24,17 @@ namespace DIRMENU.Pages
     /// <summary>
     /// Interaction logic for WeaponEditor.xaml
     /// </summary>
-    public partial class WeaponEditor : Page
+    public partial class ItemGenEditor : Page
     {
 
         private string currentCategory = "CraftPart";
         private string currentItem = "CraftPart_Algae";
 
-        public WeaponEditor()
+        public ItemGenEditor()
         {
             InitializeComponent();
             string? executablePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string? filePath = Path.Combine(executablePath ?? "", "inventory.txt");
+            string? filePath = Path.Combine(executablePath ?? "", "inventory_gen.txt");
             AddInventory(filePath);
         }
 
@@ -85,7 +85,7 @@ namespace DIRMENU.Pages
                 }
                 else if (line.Trim() == "};" || line.Trim() == "}")
                 {               
-                    if (itemProperties.Count > 0)
+                    if (itemProperties.Count > 0 && !Inventory[category].ContainsKey(itemName))
                     {
                         Inventory[category][itemName] = new Dictionary<string, string>(itemProperties);
                     }
@@ -172,9 +172,10 @@ namespace DIRMENU.Pages
             {
                 ZipFile.ExtractToDirectory(dataPakPath, tempDir);
 
-                string invDataPath = Path.Combine(tempDir, "data", "inventory.scr");
+                string invDataPath = Path.Combine(tempDir, "data", "inventory_gen.scr");
                 string? currentLoopItem = null;
                 string? currentLoopCategory = null;
+                string? lastItem = null;
 
                 if (invDataPath != null)
                 {
@@ -192,6 +193,10 @@ namespace DIRMENU.Pages
                         } 
                         else if (line.Contains("(") && line.Trim().Length > 3 && currentLoopItem != null && currentLoopCategory != null)
                         {
+                            if (currentLoopItem == lastItem)
+                            {
+                                continue;
+                            }
                             string propertyName = line.Split("(")[0].Trim();
                             if (
                              propertyName.Length > 0 &&
@@ -209,6 +214,7 @@ namespace DIRMENU.Pages
                         }
                         else if (line.Contains("}"))
                         {
+                            lastItem = currentLoopItem;
                             currentLoopItem = null;
                             currentLoopCategory = null;
                         }
@@ -272,7 +278,7 @@ namespace DIRMENU.Pages
             try
             {
                 ZipFile.ExtractToDirectory(dataPakPath, tempDir);
-                string invDataPath = Path.Combine(tempDir, "data", "inventory.scr");
+                string invDataPath = Path.Combine(tempDir, "data", "inventory_gen.scr");
                 AddInventory(invDataPath);
             }
             catch

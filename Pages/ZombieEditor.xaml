@@ -58,7 +58,7 @@
                 <Button Style="{StaticResource RoundedButton}" Grid.Column="12" Click="LoadFile_Click" Uid="loadRam">Ram</Button>
             </Grid>
         </Border>
-        <Border Grid.Row="2" CornerRadius="10" Background="#222E3B" Margin="5">
+        <Border Grid.Row="2" CornerRadius="10" Background="#0954AE" Margin="5">
             <ListBox Name="ParamList" Background="Transparent" BorderBrush="Transparent" Foreground="White" HorizontalContentAlignment="Center" Padding="5" FontFamily="Open Sans Extrabold">
                 <ListBox.ItemTemplate>
                     <DataTemplate>

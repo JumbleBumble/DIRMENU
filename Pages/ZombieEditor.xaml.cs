@@ -55,12 +55,21 @@ namespace DIRMENU.Pages
             { "loadRam", ("infected_data_preset_custom_6", "infected") }
         };
 
+        Button? currentButton = null;
         private void LoadFile_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && loadButtonMap.TryGetValue(button.Uid, out var fileInfo))
             {
                 string file = fileInfo.file;
                 string type = fileInfo.type;
+                if (currentButton != null)
+                {
+                    currentButton.Background = Brushes.White;
+                    currentButton.Foreground = Brushes.Black;
+                }
+                currentButton = button;
+                currentButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#6a6a6a"));
+                currentButton.Foreground = Brushes.White;
 
                 if (currentFile != file || currentType != type)
                 {
