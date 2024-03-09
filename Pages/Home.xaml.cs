@@ -1,4 +1,6 @@
 ﻿using Microsoft.Win32;
+using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -29,6 +31,11 @@ namespace DIRMENU.Pages
             NavigationService?.Navigate(new ItemGenEditor());
         }
 
+        private void NavItemSpecialEditor(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new SpecialEditor());
+        }
+
         private void SelectDataPath(object sender, RoutedEventArgs e)
         {
             if (sender is Button button)
@@ -41,6 +48,9 @@ namespace DIRMENU.Pages
                 {
                     ((App)Application.Current).dataPakPath = openFileDialog.FileName;
                     button.Content = openFileDialog.FileName;
+                    StreamWriter SavedPath = File.CreateText("DataPakPath.txt");
+                    SavedPath.WriteLine(openFileDialog.FileName);
+                    SavedPath.Close();
                 }
             }
         }

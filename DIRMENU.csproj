@@ -16,6 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Pages\SpecialEditor.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\ItemGenEditor.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

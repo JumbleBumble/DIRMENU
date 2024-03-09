@@ -38,6 +38,9 @@
                 <Border Padding="4">
                     <Button Style="{StaticResource RoundedButton}" MaxWidth="120" Click="NavItemGenEditor" >Item Gen Editor</Button>
                 </Border>
+                <Border Padding="4">
+                    <Button Style="{StaticResource RoundedButton}" MaxWidth="120" Click="NavItemSpecialEditor" >Special Editor</Button>
+                </Border>
             </StackPanel>
         </Border>
     </Grid>
